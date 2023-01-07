@@ -1,6 +1,7 @@
 import sys
 
 # import different parts
+from util import *
 import lexer
 
 version = "Alpha v0.1"
@@ -22,7 +23,7 @@ class Iterator:
   def __iter__(self):
     return self
   
-  def revert(self, n=1):
+  def set_pos(self, n=1):
     self.position = n
 
 # ---
@@ -46,14 +47,15 @@ def main():
       # Read all the file and split into lines
       lines = f.read().splitlines()
       
-      # Run the Lexer
-      tokens = lexer.lex(lines)
-      print(tokens)
-      # Add labels for goto statemente
-      #add_labels(tokens)
+      # Declare tokens
+      tokens = []
       
-      # Run the code with the tokens.
-      #run(tokens)
+      # Run the Lexer, line by line
+      for i, l in enumerate(lines):
+        t = lexer.lex(l, i)
+        tokens.append(t)
+      
+      print(tokens)
   except FileNotFoundError:
     throw_error_noline(f"The source file '{sys.argv[1]}' doesn't exist.")
 
