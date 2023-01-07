@@ -59,19 +59,24 @@ def lex(l, line_n):
       
       tokens.append(Token(TokenType.IDENTIFIER, s, start))
     
-    # Quotes
+    # detect quotes
     elif l[i] == "\"" or l[i] == "'":
       start = i
       s = ""
       
-      while i < len(l) and (l[i] != "\"" or l[i] != "'"):
+      i += 1
+      
+      while i < len(l) and (l[i] != "\"" and l[i] != "'"):
         s += l[i]
         i += 1
+      
+      i += 1
       
       tokens.append(Token(TokenType.LIT_STR, s, start))
     # Unknown
     else:
       throw_error_noline(f"Invalid token: '{l[i]}' at position {i + 1} in line {line_n + 1}")
+  
   i += 1
   
   return tokens

@@ -55,7 +55,10 @@ def main():
         t = lexer.lex(l, i)
         tokens.append(t)
       
-      print(tokens)
+      for t in tokens:
+        for tt in t:
+          print(tt)
+     
   except FileNotFoundError:
     throw_error_noline(f"The source file '{sys.argv[1]}' doesn't exist.")
 
