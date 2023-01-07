@@ -3,6 +3,10 @@ from enum import Enum
 # inport custom files
 from util import *
 
+keywords = [
+  "print"
+]
+
 class TokenType(Enum):
   #EOF = 0
   #NEWLINE = 1
@@ -56,6 +60,11 @@ def lex(l, line_n):
       while i < len(l) and is_letter(l[i]):
         s += l[i]
         i += 1
+      
+      if s in keywords:
+        tokens.append(Token(TokenType.KEYWORD, s, start))
+        i += 1
+        continue
       
       tokens.append(Token(TokenType.IDENTIFIER, s, start))
     
