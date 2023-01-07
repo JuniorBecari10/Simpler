@@ -122,6 +122,6 @@ def lex(l, line_n):
     
     # Unknown
     else:
-      throw_error_noline(f"Invalid token: '{l[i]}' at position {i + 1} in line {line_n + 1}")
+      throw_error(f"Invalid token: '{l[i]}' at position {i + 1}", line_n + 1)
   
   return tokens

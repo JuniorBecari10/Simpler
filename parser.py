@@ -16,9 +16,16 @@ class ParseNode:
     return "ParseNode(type: " + str(self.type) + ", tokens: " + str(self.tokens) + ")"
 
 def parse(tokens, line_n):
+  # variable declaration
   if len(tokens) >= 2 and tokens[0].type == TokenType.IDENTIFIER and tokens[1].type == TokenType.EQUALS:
     return ParseNode(NodeType.VAR_DECL, tokens)
-
+  
+  elif len(tokens) >= 1 and tokens[0].type == TokenType.KEYWORD and tokens[0].cont == "print":
+    return ParseNode(NodeType.PRINT_STAT, tokens)
+  
+  # Unknown
+  else:
+    throw_error(f"Unknown statement.", line_n + 1)
 
 # Grammar:
 #

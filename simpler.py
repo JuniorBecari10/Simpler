@@ -62,7 +62,7 @@ def main():
         for tt in t:
           print(tt)
      
-      print("---")
+      print()
       
       nodes = []
       
