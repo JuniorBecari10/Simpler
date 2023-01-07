@@ -7,26 +7,6 @@ import parser
 
 version = "Alpha v0.1"
 
-# Source: StackOverflow (Modified)
-# A custom iterator that allows the modification of its count (for goto statements)
-class Iterator:
-  def __init__(self, start, end):
-    self.end = end
-    self.position = start
-  
-  def __next__(self):
-    if self.position >= self.end:
-      raise StopIteration
-    else:
-      self.position += 1
-      return self.position - 1
-  
-  def __iter__(self):
-    return self
-  
-  def set_pos(self, n=1):
-    self.position = n
-
 # ---
 
 # The main function. The program starts here.
