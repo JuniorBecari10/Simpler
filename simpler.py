@@ -3,6 +3,7 @@ import sys
 # import different parts
 from util import *
 import lexer
+import parser
 
 version = "Alpha v0.1"
 
@@ -38,6 +39,8 @@ def main():
   if sys.argv[1] == "-v" or sys.argv[1] == "--version":
     print(f"Simpler {version}")
     print("Made by Antonio Carlos (JuniorBecari10).")
+    print()
+    print("\"The simplest compiled language ever made\".")
     sys.exit(0)
   
   # Run the program
@@ -58,6 +61,18 @@ def main():
       for t in tokens:
         for tt in t:
           print(tt)
+     
+      print("---")
+      
+      nodes = []
+      
+      # Run the Parser, line by line
+      for i, t in enumerate(tokens):
+        n = parser.parse(t, i)
+        nodes.append(n)
+      
+      for n in nodes:
+        print(n)
      
   except FileNotFoundError:
     throw_error_noline(f"The source file '{sys.argv[1]}' doesn't exist.")

@@ -11,11 +11,21 @@ class TokenType(Enum):
   #EOF = 0
   #NEWLINE = 1
   
-  IDENTIFIER = 2
-  LIT_NUM = 3
-  LIT_STR = 4
+  IDENTIFIER = 0
+  LIT_NUM = 1
+  LIT_STR = 2
   
-  KEYWORD = 5
+  KEYWORD = 3
+  
+  PLUS = 4
+  MINUS = 5
+  TIMES = 6
+  DIVIDE = 7
+  
+  LPAREN = 8
+  RPAREN = 9
+  
+  EQUALS = 10
 
 class Token:
   def __init__(self, type, cont, pos):
@@ -82,10 +92,36 @@ def lex(l, line_n):
       i += 1
       
       tokens.append(Token(TokenType.LIT_STR, s, start))
+    
+    # Operators
+    elif l[i] == "+":
+      tokens.append(Token(TokenType.PLUS, l[i], i))
+      i += 1
+    elif l[i] == "-":
+      tokens.append(Token(TokenType.MINUS, l[i], i))
+      i += 1
+    elif l[i] == "*":
+      tokens.append(Token(TokenType.TIMES, l[i], i))
+      i += 1
+    elif l[i] == "/":
+      tokens.append(Token(TokenType.DIVIDE, l[i], i))
+      i += 1
+    
+    # Parenthesis
+    elif l[i] == "(":
+      tokens.append(Token(TokenType.LPAREN, l[i], i))
+      i += 1
+    elif l[i] == ")":
+      tokens.append(Token(TokenType.RPAREN, l[i], i))
+      i += 1
+    
+    # Equals
+    elif l[i] == "=":
+      tokens.append(Token(TokenType.EQUALS, l[i], i))
+      i += 1
+    
     # Unknown
     else:
       throw_error_noline(f"Invalid token: '{l[i]}' at position {i + 1} in line {line_n + 1}")
-  
-  i += 1
   
   return tokens
