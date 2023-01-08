@@ -48,14 +48,14 @@ def main():
       
       # Run the Parser, line by line
       for i, t in enumerate(tokens):
-        n = parser.parse(t, i)
+        n = parser.parse(t, i, lines[i])
         nodes.append(n)
       
       for n in nodes:
         print(n)
      
   except FileNotFoundError:
-    throw_error_noline(f"The source file '{sys.argv[1]}' doesn't exist.")
+    throw_error_noline(f"The source file '{sys.argv[1]}' doesn't exist.", "Verify if you typed the file's name correctly.")
 
 # --
 

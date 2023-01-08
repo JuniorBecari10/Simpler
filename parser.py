@@ -15,9 +15,9 @@ class ParseNode:
   def __repr__(self):
     return "ParseNode(type: " + str(self.type) + ", tokens: " + str(self.tokens) + ")"
 
-def parse(tokens, line_n):
-  # variable declaration
-  if len(tokens) >= 2 and tokens[0].type == TokenType.IDENTIFIER and tokens[1].type == TokenType.EQUALS:
+def parse(tokens, line_n, line):
+  # variable declaration (must have 3 or more tokens (a = <value>))
+  if len(tokens) >= 3 and tokens[0].type == TokenType.IDENTIFIER and tokens[1].type == TokenType.ASSIGN:
     return ParseNode(NodeType.VAR_DECL, tokens)
   
   elif len(tokens) >= 1 and tokens[0].type == TokenType.KEYWORD and tokens[0].cont == "print":
@@ -25,7 +25,7 @@ def parse(tokens, line_n):
   
   # Unknown
   else:
-    throw_error(f"Unknown statement.", line_n + 1)
+    throw_error(f"Unknown statement: '{line}'.", line_n + 1, ("This is not the correct way to declare a variable.\n\nExample:\na = 10\nb = 'Hello'" if any_has_type(tokens, TokenType.ASSIGN) else ("This is not the correct way to declare a print statement.\n\nExample:\nprint 'Hello World!'\nprintl 'Hello.'" if any_cont_contains(tokens, "pri") else "")))
 
 # Grammar:
 #

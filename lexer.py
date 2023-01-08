@@ -25,7 +25,7 @@ class TokenType(Enum):
   LPAREN = 8
   RPAREN = 9
   
-  EQUALS = 10
+  ASSIGN = 10
 
 class Token:
   def __init__(self, type, cont, pos):
@@ -115,13 +115,13 @@ def lex(l, line_n):
       tokens.append(Token(TokenType.RPAREN, l[i], i))
       i += 1
     
-    # Equals
+    # Assignment
     elif l[i] == "=":
-      tokens.append(Token(TokenType.EQUALS, l[i], i))
+      tokens.append(Token(TokenType.ASSIGN, l[i], i))
       i += 1
     
     # Unknown
     else:
-      throw_error(f"Invalid token: '{l[i]}' at position {i + 1}", line_n + 1)
+      throw_error(f"Invalid token: '{l}' at position {i + 1}", line_n + 1, "                " + (" " * i) + "^" + "\n" + ("We don't use '$' anymore to reference a variable.\n\nExample:\na = 10\nprint a" if l[i] == "$" else ""))
   
   return tokens
