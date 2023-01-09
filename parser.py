@@ -20,6 +20,7 @@ def parse(tokens, line_n, line):
   if len(tokens) >= 3 and tokens[0].type == TokenType.IDENTIFIER and tokens[1].type == TokenType.ASSIGN:
     return ParseNode(NodeType.VAR_DECL, tokens)
   
+  # if it's a print statement (first token is a keyword with cont 'print'.)
   elif len(tokens) >= 1 and tokens[0].type == TokenType.KEYWORD and tokens[0].cont == "print":
     return ParseNode(NodeType.PRINT_STAT, tokens)
   

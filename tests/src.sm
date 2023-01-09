@@ -1,2 +1,5 @@
-a 10 =
-print "a is " a
+a = input num 
+print a
+
+a = 10
+print a

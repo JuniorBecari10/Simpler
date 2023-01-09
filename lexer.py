@@ -4,8 +4,13 @@ from enum import Enum
 from util import *
 
 keywords = [
-  "print"
+  "print",
   "input"
+]
+
+types = [
+  "num",
+  "str"
 ]
 
 class TokenType(Enum):
@@ -48,15 +53,17 @@ def lex(l, line_n):
       i += 1
       continue
     
-    # if the current character is a char or a dot
+    # if the current character is a digit or a dot
     elif is_digit(l[i]) or l[i] == ".":
       start = i
       n = ""
       
+      # While it's a digit or dot, continue looping
       while i < len(l) and (is_digit(l[i]) or l[i] == "."):
         n += l[i]
         i += 1
       
+      # Convert to number and add to the tokens list
       try:
         num = float(n)
         
@@ -69,15 +76,24 @@ def lex(l, line_n):
       start = i
       s = ""
       
+      # While it's a letter continue looping
       while i < len(l) and is_letter(l[i]):
         s += l[i]
         i += 1
       
+      # if it's a keyword
       if s in keywords:
         tokens.append(Token(TokenType.KEYWORD, s, start))
         i += 1
         continue
       
+      # if it's a type
+      if s in types:
+        tokens.append(Token(TokenType.TYPE, s, start))
+        i += 1
+        continue
+      
+      # else, it's a identifier
       tokens.append(Token(TokenType.IDENTIFIER, s, start))
     
     # detect quotes
@@ -87,6 +103,7 @@ def lex(l, line_n):
       
       i += 1
       
+      # While there's not another quote, we're still inside them
       while i < len(l) and (l[i] != "\"" and l[i] != "'"):
         s += l[i]
         i += 1
@@ -122,10 +139,11 @@ def lex(l, line_n):
       tokens.append(Token(TokenType.ASSIGN, l[i], i))
       i += 1
     
-    # Unknown
+    # Unknown; invalid
     else:
       throw_error(f"Invalid token: '{l}' at position {i + 1}", line_n + 1, "                " + (" " * i) + "^" + "\n" + ("We don't use '$' anymore to reference a variable.\n\nExample:\na = 10\nprint a" if l[i] == "$" else ""))
   
+  # New line; equivalent to semicolon (;) in C.
   tokens.append(Token(TokenType.NEWLINE, "", len(l)))
   
   return tokens

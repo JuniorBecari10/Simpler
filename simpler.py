@@ -29,31 +29,38 @@ def main():
     with open(sys.argv[1], "r") as f:
       # Read all the file and split into lines
       lines = f.read().splitlines()
+    
+    # Declare tokens
+    tokens = []
+    
+    # Run the Lexer, line by line
+    for i, l in enumerate(lines):
+      if len(l) == 0:
+        continue
       
-      # Declare tokens
-      tokens = []
-      
-      # Run the Lexer, line by line
-      for i, l in enumerate(lines):
-        t = lexer.lex(l, i)
-        tokens.append(t)
-      
-      for t in tokens:
-        for tt in t:
-          print(tt)
-     
-      print()
-      
-      nodes = []
-      
-      # Run the Parser, line by line
-      for i, t in enumerate(tokens):
-        n = parser.parse(t, i, lines[i])
-        nodes.append(n)
-      
-      for n in nodes:
-        print(n)
-     
+      t = lexer.lex(l, i)
+      tokens.append(t)
+    
+    for t in tokens:
+      for tt in t:
+        print(tt)
+    
+    print()
+    
+    nodes = []
+    
+    # Run the Parser, line by line
+    for i, t in enumerate(tokens):
+      n = parser.parse(t, i, lines[i])
+      nodes.append(n)
+    
+    for n in nodes:
+      print(n)
+    
+    # Compile the code.
+    
+    
+    
   except FileNotFoundError:
     throw_error_noline(f"The source file '{sys.argv[1]}' doesn't exist.", "Verify if you typed the source file's name correctly.")
 
