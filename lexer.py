@@ -5,27 +5,29 @@ from util import *
 
 keywords = [
   "print"
+  "input"
 ]
 
 class TokenType(Enum):
   #EOF = 0
-  #NEWLINE = 1
+  NEWLINE = 0
   
-  IDENTIFIER = 0
-  LIT_NUM = 1
-  LIT_STR = 2
+  IDENTIFIER = 1
+  LIT_NUM = 2
+  LIT_STR = 3
   
-  KEYWORD = 3
+  KEYWORD = 4
+  TYPE = 5
   
-  PLUS = 4
-  MINUS = 5
-  TIMES = 6
-  DIVIDE = 7
+  PLUS = 6
+  MINUS = 7
+  TIMES = 8
+  DIVIDE = 9
   
-  LPAREN = 8
-  RPAREN = 9
+  LPAREN = 10
+  RPAREN = 11
   
-  ASSIGN = 10
+  ASSIGN = 12
 
 class Token:
   def __init__(self, type, cont, pos):
@@ -123,5 +125,7 @@ def lex(l, line_n):
     # Unknown
     else:
       throw_error(f"Invalid token: '{l}' at position {i + 1}", line_n + 1, "                " + (" " * i) + "^" + "\n" + ("We don't use '$' anymore to reference a variable.\n\nExample:\na = 10\nprint a" if l[i] == "$" else ""))
+  
+  tokens.append(Token(TokenType.NEWLINE, "", len(l)))
   
   return tokens

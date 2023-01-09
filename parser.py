@@ -25,7 +25,7 @@ def parse(tokens, line_n, line):
   
   # Unknown
   else:
-    throw_error(f"Unknown statement: '{line}'.", line_n + 1, ("This is not the correct way to declare a variable.\n\nExample:\na = 10\nb = 'Hello'" if any_has_type(tokens, TokenType.ASSIGN) else ("This is not the correct way to declare a print statement.\n\nExample:\nprint 'Hello World!'\nprintl 'Hello.'" if any_cont_contains(tokens, "pri") else "")))
+    throw_error(f"Invalid statement: '{line}'.", line_n + 1, ("This is not the correct way to declare a variable.\n\nExample:\na = 10\nb = 'Hello'" if any_has_type(tokens, TokenType.ASSIGN) else ("This is not the correct way to declare a print statement.\n\nExample:\nprint 'Hello World!'\nprintl 'Hello.'" if any_cont_contains(tokens, "pri") else "")))
 
 # Grammar:
 #

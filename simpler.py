@@ -55,7 +55,7 @@ def main():
         print(n)
      
   except FileNotFoundError:
-    throw_error_noline(f"The source file '{sys.argv[1]}' doesn't exist.", "Verify if you typed the file's name correctly.")
+    throw_error_noline(f"The source file '{sys.argv[1]}' doesn't exist.", "Verify if you typed the source file's name correctly.")
 
 # --
 

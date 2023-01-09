@@ -1,20 +1,19 @@
 #include <stdio.h>
-#include <stdbool.h>
 
 typedef struct
 {
-  char *value;
-  bool is_num;
+  char *s;
+  float f;
+  char type;
 }
 Var;
 
-void print(Var v, ...)
+void print(Var *v)
 {
-  va_list s;
-  va_start(s, v);
-  
-  
-  
+  if (v->type == 's')
+    printf("%s dd", v->s);
+  else
+    printf("%d aaaa", v->f);
 }
 
 int main()
@@ -26,11 +25,13 @@ int main()
     print "Hello World" a
   */
   
-  Var a;
-  a.value = "10";
-  a.is_num = true;
+  Var *a;
+  a->f = 10;
+  a->s = "hello";
+  a->type = 's';
   
-  
+  print(a);
+  printf("\n");
   
   return 0;
 }
