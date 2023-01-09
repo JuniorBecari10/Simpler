@@ -21,19 +21,23 @@ def main():
     print("Usage: simpler [run] [-v | --version] <file>")
     sys.exit(1)
   
+  # Verify if the user has asked for the version
   if sys.argv[1].lower() == "-v" or sys.argv[1].lower() == "--version":
     print(f"Simpler {version}")
     print("Made by Antonio Carlos (JuniorBecari10).")
     sys.exit(0)
   
+  # Prevention
   file = sys.argv[1]
   
+  # If the user has typed 'run', change the arg for the file, and add flag to run the code, not just compile it
   if sys.argv[1].lower() == "run" and not exists(sys.argv[1]):
     if len(sys.argv) == 2:
       print("Usage: simpler [run] [-v | --version] <file>")
       sys.exit(1)
     
     file = sys.argv[2]
+    run_flag = True
   
   # Run the program
   try:
