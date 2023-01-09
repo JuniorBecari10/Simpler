@@ -1,32 +1,44 @@
 import sys
 
 # import different parts
+from os.path import exists
+
 from util import *
+
 import lexer
 import parser
 
 version = "Alpha v0.1"
+
+#langs = ["go", "c", "cpp"]
 
 # ---
 
 # The main function. The program starts here.
 def main():
   # Verify the CLI args
-  if len(sys.argv) != 2:
-    print("Usage: simpler <file> | [-v | --version]")
+  if len(sys.argv) < 2 or len(sys.argv) > 4:
+    print("Usage: simpler [run] [-v | --version] <file>")
     sys.exit(1)
   
-  if sys.argv[1] == "-v" or sys.argv[1] == "--version":
+  if sys.argv[1].lower() == "-v" or sys.argv[1].lower() == "--version":
     print(f"Simpler {version}")
     print("Made by Antonio Carlos (JuniorBecari10).")
-    print()
-    print("\"The simplest compiled language ever made\".")
     sys.exit(0)
+  
+  file = sys.argv[1]
+  
+  if sys.argv[1].lower() == "run" and not exists(sys.argv[1]):
+    if len(sys.argv) == 2:
+      print("Usage: simpler [run] [-v | --version] <file>")
+      sys.exit(1)
+    
+    file = sys.argv[2]
   
   # Run the program
   try:
     # Open the source file
-    with open(sys.argv[1], "r") as f:
+    with open(file, "r") as f:
       # Read all the file and split into lines
       lines = f.read().splitlines()
     
