@@ -7,6 +7,7 @@ from util import *
 
 import lexer
 import parser
+import compiler
 
 version = "Alpha v0.1"
 
@@ -46,14 +47,17 @@ def main():
       # Read all the file and split into lines
       lines = f.read().splitlines()
     
+    # Clean empty lines
+    for i, l in enumerate(lines):
+      if len(l) == 0:
+        lines.remove(lines[i])
+        continue
+    
     # Declare tokens
     tokens = []
     
     # Run the Lexer, line by line
     for i, l in enumerate(lines):
-      if len(l) == 0:
-        continue
-      
       t = lexer.lex(l, i)
       tokens.append(t)
     
@@ -74,8 +78,7 @@ def main():
       print(n)
     
     # Compile the code.
-    
-    
+    lines = compiler.compile(nodes)
     
   except FileNotFoundError:
     throw_error_noline(f"The source file '{sys.argv[1]}' doesn't exist.", "Verify if you typed the source file's name correctly.")

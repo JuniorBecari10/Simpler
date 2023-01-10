@@ -17,9 +17,7 @@ print "a is " a
 
 func main() {
   scanner := bufio.NewScanner(os.Stdin)
-  
   var a Var = 10
-  
   fmt.Printf("a is %v\n", a)
   
   // ---
@@ -30,9 +28,13 @@ func main() {
   b = input
   print b
   */
-  
+  test()
   scanner.Scan()
   var b Var = scanner.Text()
   
   fmt.Printf("%v\n", b)
+}
+
+func test() {
+  fmt.Println("hello")
 }

@@ -5,7 +5,11 @@ from util import *
 
 keywords = [
   "print",
-  "input"
+  "printl",
+  "input",
+  "if",
+  "exit",
+  "goto"
 ]
 
 types = [
@@ -33,6 +37,16 @@ class TokenType(Enum):
   RPAREN = 11
   
   ASSIGN = 12
+  LABEL = 13
+  
+  EQUALS = 15
+  DIFF = 16
+  
+  GREATER = 17
+  GREATER_EQ = 18
+  
+  LESS = 19
+  LESS_EQ = 20
 
 class Token:
   def __init__(self, type, cont, pos):
@@ -49,7 +63,7 @@ def lex(l, line_n):
   i = 0
   while i < len(l):
     # ignore spaces
-    if l[i] == " ":
+    if l[i] == " " or l[i] == ":":
       i += 1
       continue
     
@@ -93,18 +107,24 @@ def lex(l, line_n):
         i += 1
         continue
       
+      # if it's a label
+      if start > 0 and l[start - 1] == ":":
+        tokens.append(Token(TokenType.LABEL, s, start - 1))
+        i += 1
+        continue
+      
       # else, it's a identifier
       tokens.append(Token(TokenType.IDENTIFIER, s, start))
     
     # detect quotes
-    elif l[i] == "\"" or l[i] == "'":
+    elif l[i] == "\"":
       start = i
       s = ""
       
       i += 1
       
       # While there's not another quote, we're still inside them
-      while i < len(l) and (l[i] != "\"" and l[i] != "'"):
+      while i < len(l) and (l[i] != "\""):
         s += l[i]
         i += 1
       
@@ -136,6 +156,11 @@ def lex(l, line_n):
     
     # Assignment
     elif l[i] == "=":
+      if i < len(l) and l[i + 1] == "=":
+        tokens.append(Token(TokenType.EQUALS, l[i:i+2], i))
+        i += 2
+        continue
+      
       tokens.append(Token(TokenType.ASSIGN, l[i], i))
       i += 1
     

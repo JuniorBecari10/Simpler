@@ -1,5 +1,8 @@
-a = input num 
-print a
+printl "What's your name? "
+name = input str
 
-a = 10
-print a
+if name == "joao" goto :joao
+exit 0
+
+:joao
+print "Your name is " name "!"
