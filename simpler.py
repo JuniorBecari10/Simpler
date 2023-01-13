@@ -11,8 +11,6 @@ import compiler
 
 version = "Alpha v0.1"
 
-#langs = ["go", "c", "cpp"]
-
 # ---
 
 # The main function. The program starts here.
